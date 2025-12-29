@@ -12,3 +12,4 @@
 ## プロジェクト一覧
 
 - `projects/rate-limiter/`: レートリミッターの実装
+- `projects/consistent-hash/`: consistent hashing の実装
