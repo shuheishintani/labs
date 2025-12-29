@@ -8,17 +8,15 @@ import (
 )
 
 type FixedWindowConfig struct {
-	// Limit is max allowed requests per window.
-	Limit int
-	// Window is the fixed window size.
+	Limit  int
 	Window time.Duration
-	// Clock is optional. If nil, SystemClock is used.
+
+	// Clock は任意です。nil の場合は SystemClock を使います。
 	Clock Clock
 
-	// StateTTL enables lazy cleanup of per-key state when > 0.
+	// StateTTL > 0 の場合、使われなくなった key の状態を遅延削除します（メモリ肥大の抑制）。
 	StateTTL time.Duration
-	// CleanupInterval controls cleanup frequency when StateTTL > 0.
-	// If <= 0, it defaults to StateTTL.
+	// CleanupInterval は掃除頻度です。StateTTL > 0 かつ <= 0 の場合は StateTTL と同じにします。
 	CleanupInterval time.Duration
 }
 
@@ -99,7 +97,7 @@ func (fw *FixedWindow) Allow(key string) (bool, time.Duration) {
 			st.windowStart = windowStart
 			st.count = 0
 		} else if windowStart.Before(st.windowStart) {
-			// Clock went backwards. Align to current computed windowStart.
+			// 時刻が巻き戻った場合でも、計算した windowStart に合わせて状態をリセットします。
 			st.windowStart = windowStart
 			st.count = 0
 		}
@@ -130,7 +128,7 @@ func (fw *FixedWindow) cleanupLocked(now time.Time) {
 	}
 }
 
-// stateCount is for tests.
+// stateCount はテスト用です。
 func (fw *FixedWindow) stateCount() int {
 	fw.mu.Lock()
 	defer fw.mu.Unlock()

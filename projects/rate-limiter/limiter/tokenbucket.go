@@ -8,17 +8,15 @@ import (
 )
 
 type TokenBucketConfig struct {
-	// Rate is tokens per second.
-	Rate float64
-	// Burst is the maximum token capacity (and initial tokens).
+	Rate  float64
 	Burst int
-	// Clock is optional. If nil, SystemClock is used.
+
+	// Clock は任意です。nil の場合は SystemClock を使います。
 	Clock Clock
 
-	// StateTTL enables lazy cleanup of per-key state when > 0.
+	// StateTTL > 0 の場合、使われなくなった key の状態を遅延削除します（メモリ肥大の抑制）。
 	StateTTL time.Duration
-	// CleanupInterval controls cleanup frequency when StateTTL > 0.
-	// If <= 0, it defaults to StateTTL.
+	// CleanupInterval は掃除頻度です。StateTTL > 0 かつ <= 0 の場合は StateTTL と同じにします。
 	CleanupInterval time.Duration
 }
 
@@ -139,7 +137,7 @@ func (tb *TokenBucket) cleanupLocked(now time.Time) {
 	}
 }
 
-// stateCount is for tests.
+// stateCount はテスト用です。
 func (tb *TokenBucket) stateCount() int {
 	tb.mu.Lock()
 	defer tb.mu.Unlock()

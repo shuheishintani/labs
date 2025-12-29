@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// Clock abstracts time for deterministic tests.
+// Clock はテストで時間を制御するためのインターフェースです。
 type Clock interface {
 	Now() time.Time
 }
@@ -14,10 +14,10 @@ type systemClock struct{}
 
 func (systemClock) Now() time.Time { return time.Now() }
 
-// SystemClock returns a real-time clock.
+// SystemClock は実時間の Clock を返します。
 func SystemClock() Clock { return systemClock{} }
 
-// ManualClock is a controllable clock for tests.
+// ManualClock はテスト用の手動 Clock です。
 type ManualClock struct {
 	mu sync.Mutex
 	t  time.Time
