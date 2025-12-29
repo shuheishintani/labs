@@ -19,20 +19,23 @@ Go で簡易な rate limiter を実装し、アルゴリズムの違い（バー
 
 ### デモ
 
-Token Bucket を一定間隔で連続実行し、`allowed/denied` と `retryAfter` を表示します。
+指定したアルゴリズムを一定間隔で連続実行し、`allowed/denied` と `retryAfter` を表示します。
 
 ```bash
-go run ./cmd/demo
+go run ./cmd/server -algo tokenbucket
 ```
 
-オプション例：
+実行例：
 
 ```bash
-# 例1: rate=2, burst=2 で 100ms 間隔・30回実行（許可/拒否の切り替わりを観察）
-go run ./cmd/demo -rate 2 -burst 2 -interval 100ms -count 30
+# Token Bucket: 許可/拒否の切り替わりを観察
+go run ./cmd/server -algo tokenbucket -rate 2 -burst 2 -interval 100ms -count 30
 
-# 例2: rate=1, burst=1 で 50ms 間隔・50回実行（拒否時に待って再試行する挙動を観察）
-go run ./cmd/demo -rate 1 -burst 1 -interval 50ms -count 50 -sleep-on-deny
+# Fixed Window: 窓内の上限到達と retryAfter を観察
+go run ./cmd/server -algo fixedwindow -limit 2 -window 1s -interval 100ms -count 10
+
+# Token Bucket: 拒否時に待って再試行する挙動を観察
+go run ./cmd/server -algo tokenbucket -rate 1 -burst 1 -interval 50ms -count 50 -sleep-on-deny
 ```
 
 ## 学び・気づき
