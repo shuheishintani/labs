@@ -40,11 +40,10 @@ go run ./cmd/server -algo fixedwindow -limit 2 -window 1s -interval 100ms -count
 go run ./cmd/server -algo tokenbucket -rate 1 -burst 1 -interval 50ms -count 50 -sleep-on-deny
 ```
 
-## 学び・気づき
+## 要点
 
 - **Token Bucket**: 平均レート（`rate`）に加えて、最大容量（`burst`）でバーストを自然に許容できる
 - **Fixed Window**: 実装は単純だが、窓境界にリクエストが寄ると「短時間に多く通る」挙動が起きやすい
 - 拒否時に返す `retryAfter` は「次に通せるまでの目安時間」
   - Token Bucket: 次の 1 トークンが貯まるまでの見積もり
   - Fixed Window: 現在の窓が終わるまでの見積もり
-- `-sleep-on-deny` を付けると、クライアントが待って再試行する挙動を疑似的に観察できる

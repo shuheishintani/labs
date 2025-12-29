@@ -46,7 +46,7 @@ _ = node
 _ = ok
 ```
 
-## 学び・気づき
+## 要点
 
 - ring は「ソート済みの hash の配列」と「hash→node の対応」で表現でき、`sort.Search` で lookup できる
 - `replicas` を増やすと（リング上の点が増えるため）割り当てが滑らかになりやすい
