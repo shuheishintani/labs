@@ -1,4 +1,4 @@
-# consistent-hash
+# consistent-hasing
 
 ## 概要
 
@@ -51,3 +51,5 @@ _ = ok
 - ring は「ソート済みの hash の配列」と「hash→node の対応」で表現でき、`sort.Search` で lookup できる
 - `replicas` を増やすと（リング上の点が増えるため）割り当てが滑らかになりやすい
 - Get は「空なら ok=false」を返すようにし、呼び出し側で扱いやすくする
+
+

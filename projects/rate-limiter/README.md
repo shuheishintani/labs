@@ -2,11 +2,11 @@
 
 ## 概要
 
-Go で簡易な rate limiter を実装し、アルゴリズムの違い（バースト許容、境界問題、精度など）を理解する。
+Go で簡易な rate limiter（Token Bucket / Fixed Window）を実装し、アルゴリズムの違い（バースト許容、境界問題、精度など）を理解する。
 
 ## 目的
 
-- Token Bucket を in-memory のライブラリとして実装し、挙動を観察できる状態にする
+- Token Bucket / Fixed Window を in-memory のライブラリとして実装し、挙動の違いを観察できる状態にする
 - `Allow(key)` の API を通して、許可/拒否と待ち時間の扱いを理解する
 
 ## 対象外
