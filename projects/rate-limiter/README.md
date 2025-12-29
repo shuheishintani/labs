@@ -17,8 +17,6 @@ Go で簡易な rate limiter（Token Bucket / Fixed Window）を実装し、ア�
 
 ## 使い方
 
-### デモ
-
 指定したアルゴリズムを一定間隔で連続実行し、`allowed/denied` と `retryAfter` を表示します。
 
 実行：
